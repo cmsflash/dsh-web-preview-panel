@@ -19,8 +19,27 @@ DeepSeek Harness（DSH）侧边网页预览面板 —— 一个标准 Cordis 插
   路径引用加入草稿（对话框保持干净，AI 按需读取文件内容，上限 64 MB）；
   图片单独拖入仍走 DSH 原生图片附件轨，混合拖入时图片同样保存为文件引用
 - **链接点击接管**：对话里点击 http(s) 链接、相对/绝对文件路径、纯文本路径
-  （自动转链接）→ 全部在侧边打开；Cmd/Ctrl+点击保留浏览器默认行为
+  （自动转链接）；外网链接默认放行到系统浏览器，本地路径在侧边打开
+  （见下方「链接打开策略」）；Cmd/Ctrl+点击保留浏览器默认行为
 - **会话隔离**：每个会话独立的预览状态、根目录（默认当前会话所属工作区）、运行进程
+
+## 链接打开策略
+
+`externalLinks` 决定外网 http(s) 链接（非 localhost / 非本站 origin）的默认去向；
+`panelHosts` / `browserHosts` 按域名强制覆盖默认，匹配规则为精确域名或 dot 子域
+后缀（`github.com` 匹配 `api.github.com`）。本地文件路径与 localhost 始终在侧边
+预览打开，不受配置影响。缺省值声明在安装清单 `cordis.patch.yml`；profile 层用
+id 定向整行覆盖（config 替换语义，需重述全部字段）：
+
+```yaml
+- id: dsh-web-preview-panel
+  config:
+    externalLinks: browser   # browser：放行到系统浏览器（默认）| panel：侧边预览打开
+    panelHosts: []           # 例：[github.com] 强制 GitHub 在侧边预览
+    browserHosts: []         # 例：[example.com] 强制放行到浏览器（externalLinks: panel 时有用）
+```
+
+配置经宿主半 `get-config` RPC 下发到浏览器半；修改后需重启 `dsh web` 并刷新页面。
 
 ## 安装
 

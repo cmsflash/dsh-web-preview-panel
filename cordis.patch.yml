@@ -1,3 +1,11 @@
 # dsh-web-preview-panel 安装清单：dsh plugin add 时把插件行插入 profile 配置
 - insert:
-    - name: dsh-web-preview-panel
+    - id: dsh-web-preview-panel
+      name: dsh-web-preview-panel
+      # 链接打开策略缺省值（profile 层可用 id 定向整行覆盖）：
+      # externalLinks: browser 放行外网链接到系统浏览器 / panel 在侧边预览打开
+      # panelHosts: 强制在侧边预览打开的域名；browserHosts: 强制放行到浏览器的域名
+      config:
+        externalLinks: browser
+        panelHosts: []
+        browserHosts: []
