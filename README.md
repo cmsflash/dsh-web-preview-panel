@@ -1,5 +1,16 @@
 # dsh-web-preview-panel
 
+> **Fork note** — vendored from npm `dsh-web-preview-panel@0.2.4` (author
+> zoumutou, MIT; upstream publishes no repository). Local patches on top of
+> the pristine import (see git history):
+>
+> 1. **Streamed-message linkify fix** — after DOM mutations settle for 1.5s,
+>    one idempotent rescan restores plain-text file links that React's
+>    streaming commits destroyed mid-turn.
+> 2. **Configurable link capture policy** — external http(s) links release to
+>    the system browser by default; local paths stay in the side panel. See
+>    「链接打开策略」 below for `externalLinks` / `panelHosts` / `browserHosts`.
+
 DeepSeek Harness（DSH）侧边网页预览面板 —— 一个标准 Cordis 插件包（Host + Client 双半），
 把工作区目录托管成 iframe 预览，并支持项目运行、元素标记批注与链接点击接管。
 
